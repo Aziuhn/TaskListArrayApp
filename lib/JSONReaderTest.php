@@ -27,7 +27,7 @@ $dataset = [
         'description' => 'Gestione file con errori di sintassi',
         'filepath' => '../dataset/TaskList-error.json',
         'error' => 'syntax-error',
-        'errorCode' => 123
+        'errorCode' => 4
     ],
     [
         'description' => 'Lettura di un file con un array vuoto',
