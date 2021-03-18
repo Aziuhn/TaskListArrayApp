@@ -4,8 +4,16 @@
  * Programmazione Funzionale - dichiarativo 
  */
 function searchText($searchText) {
-    
-   
+    return function ($task) use ($searchText){
+        $task['taskName'] = trim(strtolower($task['taskName']));
+        $searchText = trim(strtolower($searchText));
+
+        if($searchText === ''){
+            return true;
+        } else {
+            return strpos($task['taskName'],$searchText)!==FALSE;
+        }
+    };  
 }
 
 /**
@@ -14,7 +22,6 @@ function searchText($searchText) {
  * @return callable La funzione che verrà utilizzata da array_filter
  */
 function searchStatus(string $status) : callable {
-
     return function ($task) use ($status) {
         if(($status === '') || ($status === 'all')){
             return true;
@@ -27,5 +34,3 @@ function searchStatus(string $status) : callable {
         }
     };
 } 
-
-
