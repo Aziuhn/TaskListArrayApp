@@ -14,7 +14,14 @@ function searchText($searchText) {
  * @return callable La funzione che verrà utilizzata da array_filter
  */
 function searchStatus(string $status) : callable {
-    
+
+    return function ($task) use ($status) {
+        if($task['status'] === $status){
+            return true;
+        } else {
+            return false;
+        }
+    };
 } 
 
 
