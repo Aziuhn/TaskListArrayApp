@@ -16,10 +16,14 @@ function searchText($searchText) {
 function searchStatus(string $status) : callable {
 
     return function ($task) use ($status) {
-        if($task['status'] === $status){
+        if(($status === '') || ($status === 'all')){
             return true;
         } else {
-            return false;
+            if($task['status'] === $status){
+                return true;
+            } else {
+                return false;
+            }
         }
     };
 } 
