@@ -10,13 +10,6 @@ if(isset($_GET['searchText']) && $_GET['searchText']!==''){
     $searchText='';
 }
 
-if(isset($_GET['status']) && $_GET['status']!==''){
-    $searchText=$_GET['status'];
-} else {
-    $searchText='';
-}
-
-$taskList = JSONReader('dataset/Tasklist.json');
 
 ?>
 
@@ -76,49 +69,33 @@ $taskList = JSONReader('dataset/Tasklist.json');
                         <th class="text-center">stato</th>
                         <th class="text-center">data</th>
                     </tr>
-                    <?php
-                    foreach($taskList as $task){
-                        if($task['status']==='todo'){
-                            echo("
-                                <tr>
-                                <td>$task[taskName]</td>
-                                <td class='text-center'>
-                                    <span class='badge bg-danger text-uppercase'>$task[status]</span>
-                                </td>
-                                <td class='text-nowrap'>
-                                    $task[expirationDate]
-                                </td>
-                                </tr>
-                            ");
-                        } else {
-                            if($task['status']==='done'){
-                                echo("
-                                <tr>
-                                <td>$task[taskName]</td>
-                                <td class='text-center'>
-                                    <span class='badge bg-secondary text-uppercase'>$task[status]</span>
-                                </td>
-                                <td class='text-nowrap'>
-                                    $task[expirationDate]
-                                </td>
-                                </tr>
-                                ");
-                            } else {
-                                echo("
-                                <tr>
-                                <td>$task[taskName]</td>
-                                <td class='text-center'>
-                                    <span class='badge bg-primary text-uppercase'>$task[status]</span>
-                                </td>
-                                <td class='text-nowrap'>
-                                    $task[expirationDate]
-                                </td>
-                                </tr>
-                                ");
-                            }
-                        }
-                    }
-                    ?>
+                    <tr>
+                        <td>Comprare il latte</td>
+                        <td class="text-center">
+                            <span class="badge bg-danger text-uppercase">todo</span>
+                        </td>
+                        <td class="text-nowrap">
+                            3 Luglio
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Comprare la farina</td>
+                        <td class="text-center">
+                            <span class="badge bg-secondary text-uppercase">done</span>
+                        </td>
+                        <td class="text-nowrap">
+                            20 Settembre
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Comprare la farina</td>
+                        <td class="text-center">
+                            <span class="badge bg-primary text-uppercase">progress</span>
+                        </td>
+                        <td class="text-nowrap">
+                            18 Settembre
+                        </td>
+                    </tr>
                 </table>
             </section>
         </div>
