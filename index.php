@@ -4,19 +4,22 @@ require "lib/JSONReader.php";
 require "lib/searchFunctions.php";
 
 
-if(isset($_GET['searchText']) && $_GET['searchText']!==''){
-    $searchText=$_GET['searchText'];
+if(isset($_GET['text']) && $_GET['text']!==''){
+    $text=$_GET['text'];
 } else {
-    $searchText='';
+    $text='';
 }
 
 if(isset($_GET['status']) && $_GET['status']!==''){
-    $searchText=$_GET['status'];
+    $status=$_GET['status'];
 } else {
-    $searchText='';
+    $status='';
 }
 
 $taskList = JSONReader('dataset/Tasklist.json');
+
+$filteredTaskList = array_filter($taskList,searchStatus($status));
+$filteredTaskList = array_filter($filteredTaskList,searchText($text));
 
 ?>
 
@@ -42,8 +45,8 @@ $taskList = JSONReader('dataset/Tasklist.json');
         </div>
         <div class="container">
             <div class="input-group pb-3 my-1">
-                <label class="w-100 pb-1 fw-bold" for="searchText">Cerca</label>
-                <input id="searchText"  type="text" name="searchText" class="form-control" value="<?php echo($searchText) ?>">
+                <label class="w-100 pb-1 fw-bold" for="text">Cerca</label>
+                <input id="text"  type="text" name="text" class="form-control" value="<?php echo($text) ?>">
                 <div class="input-group-append">
                   <input type="submit" class="btn btn-primary" value="Invia">
                 </div>
@@ -51,19 +54,19 @@ $taskList = JSONReader('dataset/Tasklist.json');
             <div id="status-radio" class=" mb-3">
                 <div class="fw-bold pe-2 w-100">Stato attività</div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="status" type="radio" value="option0">
+                    <input class="form-check-input" name="status" type="radio" value="all" <?php if($status === 'all'){echo('checked');}?>>
                     <label for="option0" class="form-check-label" >tutti</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="status" type="radio"   value="option1">
+                    <input class="form-check-input" name="status" type="radio"   value="todo" <?php if($status === 'todo'){echo('checked');}?>>
                     <label for="option1" class="form-check-label" >da fare</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="status" type="radio"   value="option2">
+                    <input class="form-check-input" name="status" type="radio"   value="progress" <?php if($status === 'progress'){echo('checked');}?>>
                     <label for="option2" class="form-check-label" >in lavorazione</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="status" type="radio"   value="option3">
+                    <input class="form-check-input" name="status" type="radio"   value="done" <?php if($status === 'done'){echo('checked');}?>>
                     <label for="option3" class="form-check-label" >fatto</label>
                   </div>
             </div>
@@ -77,7 +80,7 @@ $taskList = JSONReader('dataset/Tasklist.json');
                         <th class="text-center">data</th>
                     </tr>
                     <?php
-                    foreach($taskList as $task){
+                    foreach($filteredTaskList as $task){
                         if($task['status']==='todo'){
                             echo("
                                 <tr>
