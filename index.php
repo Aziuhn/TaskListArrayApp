@@ -1,7 +1,7 @@
 <?php
 
-require "lib/JSONReader.php";
-require "lib/searchFunctions.php";
+require "./lib/JSONReader.php";
+require "./lib/searchFunctions.php";
 
 
 if(isset($_GET['text']) && $_GET['text']!==''){
@@ -16,7 +16,7 @@ if(isset($_GET['status']) && $_GET['status']!==''){
     $status='';
 }
 
-$taskList = JSONReader('dataset/Tasklist.json');
+$taskList = JSONReader('./dataset/TaskList.json');
 
 $filteredTaskList = array_filter($taskList,searchStatus($status));
 $filteredTaskList = array_filter($filteredTaskList,searchText($text));
